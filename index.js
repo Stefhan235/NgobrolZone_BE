@@ -4,7 +4,6 @@ const express = require("express");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
-const router = require("./routes");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -27,6 +26,7 @@ app.use(async function (req, res, next) {
     next();
 });
 
+const router= require("./routes")
 app.use("/api", router);
 
 app.use("*", (req, res) => {
