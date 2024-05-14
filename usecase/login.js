@@ -1,4 +1,4 @@
-const { getUserByEmail } = require("../repository/auth");
+const { getUserByEmail } = require("../repository/login");
 const bcrypt = require("bcrypt");
 const { createToken } = require("./util");
 
@@ -12,6 +12,7 @@ exports.login = async (email, password) => {
 
   // compare password
   const isValid = await bcrypt.compare(password, user?.password);
+
   if (!isValid) {
     throw new Error(`Wrong Password`);
   }
