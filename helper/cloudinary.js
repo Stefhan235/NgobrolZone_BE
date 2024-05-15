@@ -9,7 +9,6 @@ exports.uploader = (file) => {
         if (error) {
           return reject(error);
         }
-
         resolve(result);
       }
     );
