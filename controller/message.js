@@ -4,7 +4,7 @@ exports.getMessages = async (req, res, next) => {
     try {
         const data = await messageUsecase.getMessages();
         res.status(200).json({
-            message: "SUCCESS",
+            message: "Success",
             data,
         });
     } catch (error) {
@@ -37,7 +37,7 @@ exports.createMessage = async (req, res, next) => {
         req.io.emit("message", message);
 
         res.status(201).json({
-            message: "SUCCESS",
+            message: "Success",
             data,
         });
     } catch (error) {
