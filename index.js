@@ -34,7 +34,7 @@ app.use(async function (req, res, next) {
     next();
 });
 
-const router = require("./routes")
+const router = require("./routes");
 app.use("/api", router);
 
 app.use("*", (req, res) => {
@@ -75,6 +75,6 @@ io.on("connection", (socket) => {
     });
 });
 
-app.listen(port, () => {
+httpServer.listen(port, () => {
     console.log(`-> Local: http://localhost:3000/`);
 });
