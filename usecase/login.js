@@ -1,6 +1,10 @@
-const { getUserByEmail } = require("../repository/login");
+const {
+  getUserByEmail,
+  getGoogleAccessTokenData,
+} = require("../repository/login");
 const bcrypt = require("bcrypt");
 const { createToken } = require("./util");
+const { createUser } = require("../repository/register");
 
 exports.login = async (email, password) => {
   //Get User
@@ -22,6 +26,30 @@ exports.login = async (email, password) => {
   } else {
     delete user?.password;
   }
+
+  // CreateToken
+  const data = createToken(user);
+
+  return data;
+};
+
+exports.googleLogin = async (accessToken) => {
+  // validate token and get the data from google
+  const googleData = await getGoogleAccessTokenData(accessToken);
+
+  // get is there have any existing user with email
+  let user = await getUserByEmail(googleData?.email);
+  if (!user) {
+    user = await createUser({
+      email: googleData?.email,
+      password: "",
+      name: googleData?.name,
+      picture: googleData?.picture,
+    });
+  }
+
+  // Delete object password from user
+  delete user?.dataValues?.password;
 
   // CreateToken
   const data = createToken(user);
